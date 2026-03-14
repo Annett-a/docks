@@ -1,0 +1,74 @@
+:root{
+    --text:#111;--muted:#666;--border:#e5e7eb;--bg:#fff
+}
+*{box-sizing:border-box}
+html,body{
+    height:100%
+}
+body{
+    margin:2rem;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;
+    color:var(--text);
+    background:var(--bg)
+}
+.card{
+    max-width:820px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:24px 28px;
+    box-shadow:0 1px 2px rgba(0,0,0,.04)
+}
+h1{
+    margin:0 0 .5rem;
+    font-size:1.8rem
+}
+.muted{
+    color:var(--muted)
+}
+.mono{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace
+}
+code{
+    background:#f6f7f9;
+    padding:.15rem .35rem;
+    border-radius:6px
+}
+a.link{
+    color:#0a58ca;
+    text-decoration:none
+}
+a.link:hover{
+    text-decoration:underline
+}
+.kv{
+    display:grid;
+    grid-template-columns:180px 1fr;
+    row-gap:.5rem;
+    column-gap:1rem;
+    margin:1rem 0
+}
+.kv dt{
+    font-weight:600;
+    color:#374151
+}
+.kv dd{margin:0}
+.badge{
+    display:inline-block;
+    padding:.15rem .5rem;
+    border-radius:999px;
+    background:#eef2ff;
+    color:#3730a3;
+    font-weight:600;
+    font-size:.9rem
+}
+@media (max-width:640px){
+    body{
+        margin:1rem
+    }
+    .kv{
+        grid-template-columns:1fr
+    }
+    .kv dt{
+        margin-top:.5rem
+    }
+}

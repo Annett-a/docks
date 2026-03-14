@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:24px}
+        label{display:block;margin:8px 0 4px}
+        input,select,button{padding:8px;font-size:16px}
+        .row{margin-bottom:12px}
+        pre{background:#f6f6f6;padding:12px;overflow:auto}
+    </style>
+</head>
+<body>
+<h2>Create Document</h2>
+
+<div class="row">
+    <label for="docType">docType</label>
+    <select id="docType">
+        <option value="CARD_OPENED">CARD_OPENED</option>
+        <option value="CARD_CLOSED">CARD_CLOSED</option>
+        <option value="TRANSFER_RECEIPT">TRANSFER_RECEIPT</option>
+    </select>
+</div>
+
+<div class="row">
+    <label for="userId">userId (UUID)</label>
+    <input id="userId" size="40" value="3e0e5a62-5f8a-4e4c-bf4a-3d6de3a63c1c">
+</div>
+
+<div class="row">
+    <label for="userFio">userFio</label>
+    <input id="userFio" size="40" value="Иванов Иван">
+</div>
+
+<div class="row">
+    <label for="cardNumber">cardNumber (16 digits)</label>
+    <input id="cardNumber" size="20" value="5500123412341234">
+</div>
+
+<button id="btn">Create</button>
+
+<h3>Response</h3>
+<pre id="out">—</pre>
+<p id="links"></p>
+
+<script>
+    const ctx = location.pathname.replace(/\/create\.html$/, '');
+
+    document.getElementById('btn').onclick = async () => {
+        const payload = {
+            docType: document.getElementById('docType').value,
+            userId: document.getElementById('userId').value.trim(),
+            userFio: document.getElementById('userFio').value.trim(),
+            cardNumber: document.getElementById('cardNumber').value.trim()
+        };
+
+        const res = await fetch(`${ctx}/api/documents`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const text = await res.text();
+
+        document.getElementById('out').textContent =
+            `Status: ${res.status} ${res.statusText}\n` +
+            `Location: ${res.headers.get('Location')}\n\n` +
+            text;
+
+        try {
+            const json = JSON.parse(text);
+            if (json.id) {
+                document.getElementById('links').innerHTML =
+                    `<a href="${ctx}/api/documents/${json.id}">GET JSON</a> | ` +
+                    `<a href="${ctx}/documents/${json.id}">Open HTML</a>`;
+            }
+        } catch (e) {
+        }
+    };
+</script>
+</body>
+</html>

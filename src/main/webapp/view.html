@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"><title>View Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;margin:24px}
+        input{padding:8px;font-size:16px;width:420px} button{padding:8px 12px}
+        a{display:inline-block;margin-right:12px}
+    </style>
+</head>
+<body>
+<h2>View Document</h2>
+<p><input id="id" placeholder="uuid" />
+    <button id="open">Open</button></p>
+<p id="links"></p>
+<script>
+    const ctx = location.pathname.replace(/\/view\.html$/, '');
+    const idEl = document.getElementById('id');
+
+    document.getElementById('open').onclick = () => {
+        const id = idEl.value.trim();
+        document.getElementById('links').innerHTML =
+            `<a href="${ctx}/api/documents/${id}">GET JSON</a> ` +
+            `<a href="${ctx}/documents/${id}">Open HTML</a>`;
+    };
+</script>
+</body>
+</html>
